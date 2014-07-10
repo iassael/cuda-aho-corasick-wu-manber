@@ -1,0 +1,31 @@
+README for FFPF 1.5.0
+by Mihai Cristea, february 27th, 2006.
+contact us at ffpf-devel_-AT-_lists.sourceforge.net
+
+## 1. Building Intel me_tools for linux
+
+The linux port of me_tools depends on Intel proprietary files.
+We are not allowed to supply these, but they can be found in the Intel IXP SDK 4.x
+(CD1_IXASDK_4.1.zip/ixa_sdk_4.1.tgz/me_tools). However, the current sources 
+support Montavista linux only, you can compile them for a common linux kernel
+by applying the included patches: ixa_sdk_4.1_LinuxPatched.tgz).
+
+## 2 Prerequisites
+
+a) Crosscompile toolchain used:
+http://ixp2xxx.sourceforge.net/toolchain/armeb-unknown-linux-gnu-gcc-3.3.3-glibc-2.3.2.tar.bz2;
+The path to crosstools is set up in the main FFPF Makefile like:
+CC_CROSS = /opt/crosstool/armeb-unknown-linux-gnu/gcc-3.3.3-glibc-2.3.2/bin/gcc
+
+b) Linux sources:
+Kernel version 2.6.15 has support for IXP2xxx. However, for older versions and for specific hw platform
+(e.g., Radisys-2611, or Intel IXDP2850, there are kernel patches at http://ixp2xxx.sourceforge.net/kernel).
+The me_tools path to the linux sources (default is /usr/src/linux_arm) is written in: me_tools/XSC_CoreLibs/Makefile
+
+## 3 Using of me_tools:
+
+The main object code used is the cross-compiled kernel module: 'halMev2.ko'. It's loading is needed before 
+using of our FFPF's ue_manager (insmod halMev2.ko). This module offers support for uengine code object (.uof files) loading, 
+uengine start/stop, reset, etc.
+Moreover, halMev2 is also useful in case of remote hardware debugging by DevWorkbench running on a host Windows machine.
+
